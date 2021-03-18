@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Load RequireJS</title>
+
+    <!-- Loading the entry point script which is useful for when there is only one entry point needed. -->
+    <script data-main="scripts/main" src="scripts/require.js"></script>
+
+    <!-- If we have multiple entry points then you can include it by html. -->
+    <!-- 
+    <script src="scripts/require.js"></script>
+    <script src="scripts/main.js"></script> 
+    -->
+    
+    <script>
+
+        // Set the root path for all our modules
+        require.config({
+            // configuration goes here
+            baseUrl: 'scripts'    
+        });
+        
+        // Set specific path for single module
+        // require.config({
+        //     paths: {
+        //         "lib" : "scripts/lib"
+        //     }   
+        // }); 
+        
+    </script>
+</head>
+<body>
+    <p>
+        RequireJS is a well known JavaScript module and file loader which is supported in the latest versions of popular browsers.    
+    </p>
+</body>
+</html>
+

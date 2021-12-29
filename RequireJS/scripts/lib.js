@@ -19,6 +19,8 @@ function diag(x, y) {
 //     diag: diag,
 // };
 
+// We can use the simplified "CommonJS wrapper" for this case:
+
 define(function (require, exports, module) {
     module.exports = {
         sqrt: sqrt,
@@ -27,5 +29,8 @@ define(function (require, exports, module) {
     };  
 });
 
-// If we want to convert it as part of a build process, we can use r.js to 
-// perform the conversion for you.
+// If we just have a few modules to convert, then all you need to do is 
+// wrap the module like above.
+
+// But If we have many modules to convert and want to convert it as part of a build process, we can use r.js to 
+// perform the conversion for us.

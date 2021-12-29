@@ -9,6 +9,55 @@
     <script src='./scripts/bundle.js'></script>
 </head>
 <body>
-    <p>Browserify lets you require('modules') in the browser by bundling up all of your dependencies.</p>
+    <h1>Browserify</h1>
+    <p>Browserify is an open-source JavaScript <b>bundler tool</b> that allows developers to write and use 
+        Node.js-style modules that compile for use in the browser.</p>
+    
+    <div style="width: 250px; padding: 10px; border: 1px solid gray; background-color: lightblue;">
+        <span>npm</span> install -g<span style="padding-left: 5px; color: yellow;">browserify</span>
+    </div>
+    <div>
+        <h2>BUNDLE UP YOUR FIRST MODULE</h2>
+        <p>
+            Browserify lets you require(<span style="color: goldenrod;">'modules'</span>) in the browser 
+            by bundling up all of your dependencies.
+        </p>
+        <p>
+            Browsers don't have the <span style="color: lightskyblue;">require</span> method defined, but Node.js does. 
+            With Browserify you can write code that uses <span style="color: lightskyblue">require</span> in the same way
+            that you would use it in Node.
+        </p>
+    </div>
+    <div>
+        <p>
+            Here is a tutorial on how to use Browserify on the command line to bundle up a simple file called main.js along 
+            with all of its dependencies.
+            <ul>
+                <li>Create main.js file where require statement is used.</li>
+                <div style="width: 500px; margin: 5px 0; padding: 0 10px; border: 1px solid gray; background-color: lightblue;">
+                    <p>var unique = require('uniq');</p>
+                    <p>var data = [1, 2, 2, 3, 4, 5, 5, 5, 6];</p>
+                    <p>console.log(unique(data));</p>
+                </div>
+                <li>Create another lib.js where the functions are defined. Or even install the uniq module with npm.</li>
+                <div style="width: 500px; margin: 5px 0; padding: 0 10px; border: 1px solid gray; background-color: lightblue;">
+                    <p>npm install uniq</p>
+                </div>
+                <li>
+                    Now recursively bundle up all the required modules starting at main.js into a single file called bundle.js 
+                    with the browserify command.
+                </li>
+                <div style="width: 500px; margin: 5px 0; padding: 0 10px; border: 1px solid gray; background-color: lightblue;">
+                    <p>browserify main.js -o bundle.js</p>
+                </div>
+                <li>
+                    Drop a single &lt;script&gt; tag into your html and you're done!
+                </li>
+                <div style="width: 500px; margin: 5px 0; padding: 0 10px; border: 1px solid gray; background-color: lightblue;">
+                    <p>&lt;script src="bundle.js"&gt;&lt;/script&gt;</p>
+                </div>
+            </ul>
+        </p>
+    </div>
 </body>
 </html>

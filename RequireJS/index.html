@@ -2,13 +2,14 @@
 <html>
 <head>
     <title>Load RequireJS</title>
+    <link rel="stylesheet" href="main.css">
 
     <!-- Loading the entry point script which is useful for when there is only one entry point needed. -->
     <script data-main="scripts/main" src="scripts/require.js"></script>
 
     <!-- If we have multiple entry points then you can include it by html. -->
     <!-- 
-    <script src="scripts/require.js"></script>
+    <script src="scripts/require.js"></s>
     <script src="scripts/main.js"></script> 
     -->
     
@@ -30,9 +31,252 @@
     </script>
 </head>
 <body>
+    <h1>RequireJS</h1>
     <p>
-        RequireJS is a well known JavaScript module and file loader which is supported in the latest versions of popular browsers.    
+        RequireJS is a JavaScript <b>file and module loader</b>. It is optimized for in-browser use, but it can be used 
+        in other JavaScript environments, like Rhino and Node. Using a modular script loader like RequireJS will 
+        improve the speed and quality of your code.   
     </p>
+        <h2>ADD REQUIREJS</h2>
+        <p>
+            This setup assumes you keep all your JavaScript files in a "scripts" directory in your project. For example, 
+            if you have a project that has a project.html page, with some scripts, the directory layout might look like so:
+        </p>
+        <div class="example">
+            <ul>
+                <li>project-directory/
+                    <ul>
+                        <li>project.html</li>
+                        <li>scripts/
+                        <ul>
+                            <li>main.js</li>
+                            <li>helper/
+                            <ul>
+                                <li>util.js</li>
+                            </ul></li>
+                        </ul></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>   
+        <p>
+            Add require.js to the scripts directory, so it looks like so:
+        </p>
+        <div class="example">
+            <ul>
+                <li>project-directory/
+                    <ul>
+                        <li>project.html</li>
+                        <li>scripts/
+                        <ul>
+                            <li>main.js</li>
+                            <li><b>require.js</b></li>
+                            <li>helper/
+                            <ul>
+                                <li>util.js</li>
+                            </ul></li>
+                        </ul></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>   
+        <p>
+            To take full advantage of the optimization tool, it is suggested that you keep all inline script out of the HTML, 
+            and only reference require.js with a requirejs call like so to load your script:
+        </p>
+        <div style="width: 600px">
+            <pre>
+            <code class="html">
+<span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="keyword">html</span>&gt;</span>
+    <span class="tag">&lt;<span class="keyword">head</span>&gt;</span>
+        <span class="tag">&lt;<span class="keyword">title</span>&gt;</span>My Sample Project<span class="tag">&lt;/<span class="keyword">title</span>&gt;</span>
+        <span class="comment">&lt;!-- data-main attribute tells require.js to load
+            scripts/main.js after require.js loads. --&gt;</span>
+        <span class="tag">&lt;<span class="keyword">script</span><span class="attribute"> data-main=<span class="value">"scripts/main"</span></span><span class="attribute"> src=<span class="value">"scripts/require.js"</span></span>&gt;</span><span class="tag">&lt;/<span class="keyword">script</span>&gt;</span>
+    <span class="tag">&lt;/<span class="keyword">head</span>&gt;</span>
+    <span class="tag">&lt;<span class="keyword">body</span>&gt;</span>
+        <span class="tag">&lt;<span class="keyword">h1</span>&gt;</span>My Sample Project<span class="tag">&lt;/<span class="keyword">h1</span>&gt;</span>
+    <span class="tag">&lt;/<span class="keyword">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="keyword">html</span>&gt;</span> 
+            </code>
+            </pre>
+        </div>
+        <p>
+            You could also place the script tag end of the <body> section if you do not want the loading of the require.js script 
+            to block rendering. For browsers that support it, you could also add an <b>async</b> attribute to the script tag.
+        </p>
+        <p>
+            Inside of main.js, you can use requirejs() or just require() (which is totally same) to load any other scripts you need to run. This ensures a single entry point, 
+            since the data-main script you specify is loaded asynchronously.
+        </p>
+        <div style="width: 600px;">
+            <pre>
+            <code class="javascript">
+requirejs([<span class="string">"helper/util"</span>], <span class="function"><span class="keyword">function</span><span class="params">(util)</span> {</span>
+    <span class="comment">//This function is called when scripts/helper/util.js is loaded.</span>
+    <span class="comment">//If util.js calls define(), then this function is not fired until</span>
+    <span class="comment">//util's dependencies have loaded, and the util argument will hold</span>
+    <span class="comment">//the module value for "helper/util".</span>
+});
+            </code>
+            </pre>
+        </div>      
+    </div>
+    <h2>Common JS</h2>
+    <p>
+        <ul>
+            <li>CommonJS is a module formatting system.</li>
+            <li>It is a standard for structuring and organizing JavaScript code.</li>
+            <li>CommonJS assists in the server-side development of apps and it’s format has heavily influenced NodeJS’s module management.</li>
+            <li>CommonJS modules were designed with server development in mind.Naturally, the API is synchronous.</li>
+        </ul>         
+    </p>
+    <p>
+        <b>Module:</b> 
+        <ul>
+            <li>A module is just a bit of code encapsulated in a file, and exported to another file.</li> 
+            <li>Modules focus on a single part of functionality and remain loosely coupled with other filed in an application.</li> 
+            <li>This is because there are no global or shared variables between modules, as they only communicate via the module.exports object.</li>
+        </ul>
+        In both Node's and CommonJS's modules there are essentially two elements to interact with the module system: require and exports.
+        <p>
+            <b>require:</b> is a function that can be used to import symbols from another module to the current scope. The parameter passed to 
+            require is the <i>id</i> of the module. (In Node's implementation, it is the name of the module.)
+        </p>
+        <p>
+            <b>export:</b> is a special object: anything put in it will get exported as a public element.
+        </p>
+    </p>
+    CommonJS Style Module (<i>lib.js</i>)
+    <div style="width: 600px;">
+    <pre>
+    <code class="javascript">
+<span class="comment">// local variable</span>
+<span class="keyword">var</span> sqrt = <span class="module">Math</span>.sqrt;
+            
+<span class="module">exports</span>.square = <span class="function"><span class="keyword">function</span><span class="params">(x)</span> {</span>
+    <span class="keyword">return</span> x * x; 
+}
+            
+<span class="module">exports</span>.diag = <span class="function"><span class="keyword">function</span><span class="params">(x, y)</span> {</span>
+    <span class="keyword">return</span> sqrt(sqrt(x) + sqrt(y)); 
+}
+    </code>
+    </pre>       
+    </div>
+    Node.js Style Module (<i>lib.js</i>)
+    <div style="width: 600px;">
+    <pre>
+    <code class="javascript">
+<span class="comment">// local variable</span>
+<span class="keyword">var</span> sqrt = <span class="module">Math</span>.sqrt;
+        
+<span class="function"><span class="keyword">function</span> square<span class="params">(x)</span> {</span>
+    <span class="keyword">return</span> x * x; 
+}
+        
+<span class="function"><span class="keyword">function</span> diag<span class="params">(x, y)</span> {</span>
+    <span class="keyword">return</span> sqrt(square(x) + square(y)); 
+}
+            
+<span class="module">module</span>.<span class="module">exports</span> = {
+    sqrt: sqrt,
+    square: square,
+    diag: diag,
+};
+    </code>
+    </pre>       
+    </div>
+    Reference (<i>main.js</i>)
+    <div style="width: 600px;">
+        <pre>
+        <code class="javascript">
+<span class="comment">//------ mainA.js ------</span>
+<span class="keyword">var</span> square = require(<span class="string">'./lib.js'</span>).square;
+<span class="keyword">var</span> diag = require(<span class="string">'./lib.js'</span>).diag;
+console.log(square(11)); <span class="comment">// 121</span>
+console.log(diag(3, 4)); <span class="comment">// 5</span>
+            
+            
+<span class="comment">//------ mainB.js ------</span>
+<span class="keyword">var</span> lib = require(<span class="string">'./lib.js'</span>)
+console.log(lib.square(11)); <span class="comment">// 121</span>
+console.log(lib.diag(3, 4)); <span class="comment">// 5</span>
+console.log(lib.sqrt(49)); <span class="comment">// 7</span>
+        </code>
+        </pre>       
+        </div>
+        <h2>Asynchronous Module Definition (AMD)</h2>
+        <p>
+            <ul>
+                <li>AMD was born out of a group of developers that were displeased with the direction adopted by CommonJS.</li>
+                <li>The main difference between AMD and CommonJS lies in its support for asynchronous module loading.</li>
+            </ul>         
+        </p>
+        <div style="width: 600px;">
+            <pre>
+            <code class="javascript">
+<span class="comment">// Calling define with a dependency array and a factory function</span>
+<span class="keyword">define</span>(['dep1', 'dep2'], <span class="function"><span class="keyword">function</span><span class="params">(dep1, dep2)</span>{</span>
+
+    <span class="comment">// Define the module value by returning a value.</span>
+    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(x, y)</span>{}</span>;
+});
+
+<span class="comment">// Or:</span>
+<span class="keyword">define</span>(function (require) {
+    <span class="keyword">var</span> dep1 = require('dep1'),
+        dep2 = require('dep2');
+
+        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(x, y)</span>{}</span>;
+});
+            </code>
+            </pre>       
+        </div>
+        <p>
+            Currently the most popular implementations of AMD are require.js and Dojo.
+        </p>
+        <h2>ES2015 Modules</h2>
+        <p>
+            <ul>
+                <li>Synchronous and asynchronous loading supported.</li>
+                <li>Syntactically simple.</li>
+                <li>Integrated in the language (eventually supported everywhere, no need for libraries).</li>
+            </ul>
+        </p>
+        Module (<i>lib.js</i>)
+        <div style="width: 600px;">
+            <pre>
+            <code class="javascript">
+<span class="keyword">export</span> <span class="keyword">const</span> sqrt = <span class="module">Math</span>.sqrt;
+<span class="keyword">export</span> <span class="function"><span class="keyword">function</span> square<span class="params">(x)</span>{</span>
+    <span class="keyword">return</span> x * x;
+}
+<span class="keyword">export</span> <span class="function"><span class="keyword">function</span> diag<span class="params">(x, y)</span>{</span>
+    <span class="keyword">return</span> sqrt(square(x) + square(y));
+}
+            </code>
+            </pre>       
+        </div>
+        Reference (<i>main.js</i>)
+        <div style="width: 600px;">
+            <pre>
+            <code class="javascript">
+<span class="keyword">import</span> { square, diag } <span class="keyword">from</span> <span class="string">'lib.js'</span>;
+console.log(square(11)); <span class="comment">// 121</span>
+console.log(diag(4, 3)); <span class="comment">// 5</span>
+            </code>
+            </pre>       
+        </div>     
+        <footer style="font-style: italic;">
+            <p>Reference: 
+                <a href="https://auth0.com/blog/javascript-module-systems-showdown">
+                    JavaScript Module Systems Showdown: CommonJS vs AMD vs ES2015
+                </a><br>
+                Author: Sebastian Peyrott
+            </p>
+          </footer>
 </body>
 </html>
 

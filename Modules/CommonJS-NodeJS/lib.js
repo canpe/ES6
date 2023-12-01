@@ -1,3 +1,8 @@
+// It will treat .js files as whatever the default module system for the project which is CommonJS.
+// Can be explicitly set in package.json with "type": "commonjs".
+//
+// Can also be set in package.json with "type": "module" for enabling ES6 module.
+
 // local variable
 var sqrt = Math.sqrt;
 
